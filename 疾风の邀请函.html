@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>诚邀莅临寒舍</title>
+
+<!-- ====== 微信分享卡片 Meta 标签 ====== -->
+<meta property="og:title" content="诚邀莅临寒舍 | 乔迁之喜">
+<meta property="og:description" content="2026年6月13日 周六 17:30 · 北京市昌平区大华启宸府 · 新家暖房小聚，人来就好 🏠">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://allengin777.github.io/Gin-I/">
+<meta property="og:image" content="https://allengin777.github.io/Gin-I/share-cover.png">
+<meta property="og:image:width" content="600">
+<meta property="og:image:height" content="600">
+<meta itemprop="name" content="诚邀莅临寒舍 | 乔迁之喜">
+<meta itemprop="description" content="6月13日周六17:30，昌平大华启宸府，新家暖房小聚 🏠">
+
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: #fdfaf5;
+    color: #333;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page {
+    max-width: 480px;
+    margin: 0 auto;
+    padding-bottom: 50px;
+  }
+
+  /* ===== Hero ===== */
+  .hero {
+    text-align: center;
+    padding: 56px 24px 36px;
+  }
+  .hero .icon-home {
+    font-size: 52px;
+    display: block;
+    margin-bottom: 14px;
+  }
+  .hero h1 {
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: #4a3728;
+    margin-bottom: 6px;
+  }
+  .hero .subtitle {
+    font-size: 13px;
+    color: #b8a698;
+    letter-spacing: 6px;
+  }
+  .divider {
+    width: 36px;
+    height: 2px;
+    background: #c8b6a6;
+    margin: 18px auto 0;
+  }
+
+  /* ===== Card ===== */
+  .card {
+    margin: 0 20px 18px;
+    background: #fff;
+    border-radius: 14px;
+    padding: 26px 22px;
+    box-shadow: 0 2px 20px rgba(0,0,0,.04);
+  }
+
+  .info-row {
+    display: flex;
+    align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px solid #f2ece4;
+  }
+  .info-row:last-child { border-bottom: none; }
+  .info-icon {
+    width: 42px; height: 42px;
+    background: #f8f3ed;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 19px;
+    flex-shrink: 0;
+    margin-right: 14px;
+  }
+  .info-text h3 {
+    font-size: 12px;
+    color: #b8a698;
+    font-weight: 500;
+    margin-bottom: 3px;
+    letter-spacing: 1px;
+  }
+  .info-text p {
+    font-size: 16px;
+    color: #3d3226;
+    font-weight: 500;
+  }
+  .info-text .small {
+    font-size: 13px;
+    color: #8c7e72;
+  }
+
+  /* ===== Message ===== */
+  .message-card {
+    margin: 0 20px 18px;
+    background: #fff;
+    border-radius: 14px;
+    padding: 26px 22px;
+    box-shadow: 0 2px 20px rgba(0,0,0,.04);
+    text-align: center;
+  }
+  .message-card p {
+    font-size: 15px;
+    line-height: 1.9;
+    color: #5c4f44;
+  }
+  .message-card .sign {
+    margin-top: 14px;
+    font-size: 13px;
+    color: #b8a698;
+  }
+
+  /* ===== Map (iframe) ===== */
+  .map-section {
+    margin: 0 20px 18px;
+  }
+  .map-section h3 {
+    font-size: 15px;
+    color: #4a3728;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  .map-wrap {
+    position: relative;
+    width: 100%;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 16px rgba(0,0,0,.05);
+    background: #e8e4df;
+    cursor: pointer;
+  }
+  .map-wrap::after {
+    content: '👆 点我直接导航';
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,255,255,.92);
+    color: #4a3728;
+    font-size: 13px;
+    padding: 6px 16px;
+    border-radius: 20px;
+    z-index: 10;
+    pointer-events: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+  }
+  .map-wrap iframe {
+    width: 100%;
+    height: 280px;
+    border: none;
+    display: block;
+  }
+  /* Fallback when iframe is blocked (X-Frame-Options) */
+  .map-fallback {
+    display: none;
+    width: 100%;
+    height: 280px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #f0ebe4 0%, #e8e0d6 100%);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #b8a698;
+    font-size: 14px;
+    gap: 10px;
+  }
+  .map-fallback .pin {
+    font-size: 40px;
+    animation: bounce 1.5s infinite;
+  }
+  @keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .nav-btn-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .nav-btn {
+    flex: 1;
+    display: block;
+    padding: 13px 0;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background: #4a3728;
+    box-shadow: 0 4px 12px rgba(74,55,40,.18);
+    transition: transform .15s;
+  }
+  .nav-btn:active { transform: scale(.97); }
+  .nav-btn.secondary {
+    background: #f8f3ed;
+    color: #4a3728;
+    box-shadow: none;
+  }
+
+  /* ===== RSVP ===== */
+  .rsvp-section {
+    margin: 0 20px 18px;
+    text-align: center;
+  }
+  .rsvp-section p {
+    font-size: 15px;
+    color: #4a3728;
+    margin-bottom: 14px;
+  }
+  .contact-row {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+  }
+  .contact-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    color: #5c4f44;
+  }
+  .contact-dot {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: #f8f3ed;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .contact-dot:active { background: #e8e0d6; }
+  .contact-item span { font-size: 12px; color: #999; }
+  .wechat-hint {
+    margin-top: 12px;
+    font-size: 13px;
+    color: #e07b5a;
+    min-height: 20px;
+    transition: opacity .3s;
+  }
+
+  /* ===== Footer ===== */
+  .footer {
+    text-align: center;
+    padding: 30px 20px;
+    color: #d5cec6;
+    font-size: 12px;
+    letter-spacing: 2px;
+  }
+
+  @media (max-width: 360px) {
+    .hero { padding: 40px 16px 28px; }
+    .hero h1 { font-size: 24px; }
+    .card, .message-card { padding: 18px 14px; margin: 0 12px 14px; }
+    .info-text p { font-size: 15px; }
+    .map-wrap iframe { height: 220px; }
+    .map-fallback { height: 220px; }
+    .nav-btn-group { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Hero -->
+  <div class="hero">
+    <span class="icon-home">🏠</span>
+    <h1>诚邀莅临寒舍</h1>
+    <p class="subtitle">乔 迁 之 喜</p>
+    <div class="divider"></div>
+  </div>
+
+  <!-- Info Card -->
+  <div class="card">
+    <div class="info-row">
+      <div class="info-icon">📅</div>
+      <div class="info-text">
+        <h3>时 间</h3>
+        <p>2026年6月13日（周六）</p>
+        <p class="small">17:30</p>
+      </div>
+    </div>
+    <div class="info-row">
+      <div class="info-icon">📍</div>
+      <div class="info-text">
+        <h3>地 点</h3>
+        <p>大华启宸府</p>
+        <p class="small">北京市昌平区</p>
+      </div>
+    </div>
+    <div class="info-row">
+      <div class="info-icon">🎉</div>
+      <div class="info-text">
+        <h3>主 题</h3>
+        <p>新家暖房 · 好友小聚</p>
+        <p class="small">吃吃喝喝，随意自在</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Message -->
+  <div class="message-card">
+    <p>「新居落定，想请朋友们来坐坐。<br>不必带礼，人来就好。」</p>
+    <div class="sign">— 疾风敬邀</div>
+  </div>
+
+  <!-- Map -->
+  <div class="map-section">
+    <h3>🗺 如何到达</h3>
+    <div class="map-wrap">
+      <!-- 腾讯地图搜索嵌入（无需 API Key） -->
+      <iframe
+        id="mapIframe"
+        referrerpolicy="no-referrer"
+        loading="lazy"
+        src="https://map.qq.com/search?keyword=%E5%8C%97%E4%BA%AC%E5%B8%82%E6%98%8C%E5%B9%B3%E5%8C%BA%E5%A4%A7%E5%8D%8E%E5%90%AF%E5%AE%B8%E5%BA%9C"
+        title="腾讯地图">
+      </iframe>
+      <!-- Fallback：iframe 被拦截时的显示 -->
+      <div class="map-fallback" id="mapFallback">
+        <span class="pin">📍</span>
+        <span>北京市昌平区大华启宸府</span>
+      </div>
+    </div>
+    <div class="nav-btn-group">
+      <a class="nav-btn" id="navBtn" href="javascript:void(0)">🚗 一键导航到这里</a>
+    </div>
+    <div class="nav-btn-group" style="margin-top:8px;">
+      <a class="nav-btn secondary" id="copyBtn" href="javascript:void(0)">📋 复制地址</a>
+      <a class="nav-btn secondary" id="mapBtn0" href="javascript:void(0)">🗺 用高德打开</a>
+    </div>
+  </div>
+
+  <!-- RSVP -->
+  <div class="rsvp-section">
+    <p>🎈 能否赏光？</p>
+    <div class="contact-row">
+      <div class="contact-item" id="wechatBtn">
+        <div class="contact-dot">💬</div>
+        <span>微信我</span>
+      </div>
+      <a class="contact-item" href="tel:17602068836">
+        <div class="contact-dot">📞</div>
+        <span>17602068836</span>
+      </a>
+    </div>
+    <p class="wechat-hint" id="wechatHint"></p>
+  </div>
+
+  <div class="footer">期待你的到来 🥂</div>
+
+</div>
+
+<script>
+var ADDR = '北京市昌平区大华启宸府';
+var WECHAT_ID = '疾风';  // ← 改成你的微信号
+
+// ——— 地图 iframe 加载失败时显示 fallback ———
+var _iframe = document.getElementById('mapIframe');
+var _fallback = document.getElementById('mapFallback');
+_iframe.addEventListener('error', function() {
+  _iframe.style.display = 'none';
+  _fallback.style.display = 'flex';
+});
+
+// ——— 点击地图区域也触发导航 ———
+document.querySelector('.map-wrap').addEventListener('click', function(e) {
+  if (e.target === this || e.target.closest('.map-fallback')) {
+    openMap();
+  }
+});
+
+// ——— 一键导航 ———
+document.getElementById('navBtn').addEventListener('click', openMap);
+
+// ——— 高德地图 ———
+document.getElementById('mapBtn0').addEventListener('click', function() {
+  window.location.href = 'https://uri.amap.com/navigation?to=' + encodeURIComponent(ADDR) + '&callnative=1&mode=car';
+});
+
+function openMap() {
+  var ua = navigator.userAgent;
+  var isWechat = /MicroMessenger/i.test(ua);
+  var isIOS = /iPhone|iPad/i.test(ua);
+  if (isWechat || !isIOS) {
+    window.location.href = 'https://apis.map.qq.com/uri/v1/search?keyword=' + encodeURIComponent(ADDR) + '&referer=invitation';
+  } else {
+    window.location.href = 'http://maps.apple.com/?q=' + encodeURIComponent(ADDR);
+  }
+}
+
+// ——— 复制地址 ———
+document.getElementById('copyBtn').addEventListener('click', function() {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(ADDR).then(function() {
+      showHint('✅ 地址已复制：' + ADDR);
+    }).catch(fallbackCopy);
+  } else { fallbackCopy(); }
+});
+function fallbackCopy() {
+  var ta = document.createElement('textarea');
+  ta.value = ADDR;
+  ta.style.cssText = 'position:fixed;left:-9999px';
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand('copy'); showHint('✅ 地址已复制'); }
+  catch(e) { showHint('📋 请手动复制：' + ADDR); }
+  document.body.removeChild(ta);
+}
+
+// ——— 微信联系：点击复制微信号 ———
+document.getElementById('wechatBtn').addEventListener('click', function() {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(WECHAT_ID).then(function() {
+      showHint('✅ 微信号「' + WECHAT_ID + '」已复制，打开微信添加我吧');
+    }).catch(function() {
+      showHint('📋 微信号：' + WECHAT_ID + '（长按复制）');
+    });
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = WECHAT_ID;
+    ta.style.cssText = 'position:fixed;left:-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); showHint('✅ 微信号已复制'); }
+    catch(e) { showHint('📋 微信号：' + WECHAT_ID); }
+    document.body.removeChild(ta);
+  }
+});
+
+// ——— 底部提示 ———
+var hintTimer;
+function showHint(msg) {
+  var el = document.getElementById('wechatHint');
+  el.textContent = msg;
+  el.style.opacity = '1';
+  clearTimeout(hintTimer);
+  hintTimer = setTimeout(function() { el.style.opacity = '0'; }, 3000);
+}
+</script>
+</body>
+</html>
