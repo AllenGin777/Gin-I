@@ -8,8 +8,8 @@
 <meta property="og:title" content="诚邀莅临寒舍 | 乔迁之喜">
 <meta property="og:description" content="2026年6月13日 周六 17:30 · 北京市昌平区大华启宸府 · 新家暖房小聚，人来就好 🏠">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://allengin777.github.io/Gin-I/">
-<meta property="og:image" content="https://allengin777.github.io/Gin-I/share-cover.png">
+<meta property="og:url" content="https://fantastic-pastelito-8d7dd7.netlify.app/">
+<meta property="og:image" content="https://fantastic-pastelito-8d7dd7.netlify.app/share-cover.png">
 <meta property="og:image:width" content="600">
 <meta property="og:image:height" content="600">
 <meta itemprop="name" content="诚邀莅临寒舍 | 乔迁之喜">
@@ -19,10 +19,7 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-    background: #fdfaf5;
-    color: #333;
-    min-height: 100vh;
-    -webkit-font-smoothing: antialiased;
+    background: #fdfaf5; color: #333; min-height: 100vh; -webkit-font-smoothing: antialiased;
   }
   .page { max-width: 480px; margin: 0 auto; padding-bottom: 50px; }
   .hero { text-align: center; padding: 56px 24px 36px; }
@@ -40,31 +37,24 @@
   .message-card { margin: 0 20px 18px; background: #fff; border-radius: 14px; padding: 26px 22px; box-shadow: 0 2px 20px rgba(0,0,0,.04); text-align: center; }
   .message-card p { font-size: 15px; line-height: 1.9; color: #5c4f44; }
   .message-card .sign { margin-top: 14px; font-size: 13px; color: #b8a698; }
+
   .map-section { margin: 0 20px 18px; }
   .map-section h3 { font-size: 15px; color: #4a3728; margin-bottom: 10px; font-weight: 600; }
-  .map-wrap {
+  .map-img-wrap {
     position: relative; width: 100%; border-radius: 14px; overflow: hidden;
-    box-shadow: 0 2px 16px rgba(0,0,0,.05); background: #e8e4df; cursor: pointer;
+    box-shadow: 0 2px 16px rgba(0,0,0,.05); cursor: pointer; background: #e8e4df;
   }
-  .map-wrap::after {
-    content: '👆 点我直接导航';
+  .map-img-wrap img { width: 100%; display: block; }
+  .map-img-wrap::after {
+    content: '👆 点我导航';
     position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
     background: rgba(255,255,255,.92); color: #4a3728; font-size: 13px;
-    padding: 6px 16px; border-radius: 20px; z-index: 10; pointer-events: none;
+    padding: 6px 16px; border-radius: 20px; pointer-events: none;
     box-shadow: 0 2px 8px rgba(0,0,0,.08);
   }
-  .map-wrap iframe { width: 100%; height: 280px; border: none; display: block; }
-  .map-fallback {
-    display: none; width: 100%; height: 280px; border-radius: 14px;
-    background: linear-gradient(135deg, #f0ebe4 0%, #e8e0d6 100%);
-    flex-direction: column; align-items: center; justify-content: center;
-    text-align: center; color: #b8a698; font-size: 14px; gap: 10px;
-  }
-  .map-fallback .pin { font-size: 40px; animation: bounce 1.5s infinite; }
-  @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
   .nav-btn-group { display: flex; gap: 10px; margin-top: 12px; }
   .nav-btn {
-    flex: 1; display: block; padding: 15px 0; border: none; border-radius: 12px;
+    flex: 1; padding: 15px 0; border: none; border-radius: 12px;
     font-size: 16px; font-weight: 600; letter-spacing: 1px; cursor: pointer;
     text-align: center; color: #fff; background: #4a3728;
     box-shadow: 0 4px 12px rgba(74,55,40,.18); transition: transform .15s;
@@ -93,7 +83,6 @@
     .hero h1 { font-size: 24px; }
     .card, .message-card { padding: 18px 14px; margin: 0 12px 14px; }
     .info-text p { font-size: 15px; }
-    .map-wrap iframe, .map-fallback { height: 220px; }
     .nav-btn-group { flex-direction: column; }
   }
 </style>
@@ -129,22 +118,16 @@
   </div>
 
   <div class="map-section">
-    <h3>🗺 如何到达</h3>
-    <div class="map-wrap" id="mapWrap">
-      <iframe id="mapIframe" referrerpolicy="no-referrer" loading="lazy"
-        src="https://map.qq.com/search?keyword=%E5%8C%97%E4%BA%AC%E5%B8%82%E6%98%8C%E5%B9%B3%E5%8C%BA%E5%A4%A7%E5%8D%8E%E5%90%AF%E5%AE%B8%E5%BA%9C"
-        title="腾讯地图"></iframe>
-      <div class="map-fallback" id="mapFallback">
-        <span class="pin">📍</span>
-        <span>北京市昌平区大华启宸府</span>
-      </div>
+    <h3>🗺 精准定位</h3>
+    <div class="map-img-wrap" id="mapWrap">
+      <img src="https://apis.map.qq.com/ws/staticmap/v2/?center=116.307205,40.102299&zoom=17&size=600*300&markers=size:large|color:red|116.307205,40.102299&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77" alt="大华启宸府定位地图" id="mapImg">
     </div>
     <div class="nav-btn-group">
-      <button class="nav-btn" id="navBtn">🚗 一键导航到这里</button>
+      <button class="nav-btn" id="navBtn">🚗 打开导航</button>
     </div>
     <div class="nav-btn-group" style="margin-top:8px;">
       <button class="nav-btn secondary" id="copyBtn">📋 复制地址</button>
-      <button class="nav-btn secondary" id="gaodeBtn">🗺 用高德打开</button>
+      <button class="nav-btn secondary" id="gaodeBtn">🗺 用高德地图</button>
     </div>
   </div>
 
@@ -171,51 +154,34 @@
 (function() {
   var ADDR = '北京市昌平区大华启宸府';
   var WECHAT_ID = '疾风';
+  var LAT = 40.102299, LNG = 116.307205;
 
-  // 是否移动设备
   function isMobile() { return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent); }
   function isWechat() { return /MicroMessenger/i.test(navigator.userAgent); }
 
-  // === 地图 iframe 失败 fallback ===
-  var iframe = document.getElementById('mapIframe');
-  var fallback = document.getElementById('mapFallback');
-  iframe.addEventListener('error', function() {
-    iframe.style.display = 'none';
-    fallback.style.display = 'flex';
-  });
+  // === 点地图打开导航 ===
+  document.getElementById('mapWrap').addEventListener('click', doNavigate);
 
-  // === 点地图区域也导航 ===
-  document.getElementById('mapWrap').addEventListener('click', function(e) {
-    if (e.target === this || e.target.id === 'mapFallback' || e.target.closest('.map-fallback')) {
-      doNavigate();
-    }
-  });
-
-  // === 导航按钮 ===
+  // === 按钮 ===
   document.getElementById('navBtn').addEventListener('click', doNavigate);
-  document.getElementById('gaodeBtn').addEventListener('click', function() {
-    doNavigate('gaode');
-  });
+  document.getElementById('gaodeBtn').addEventListener('click', function() { doNavigate('gaode'); });
 
   function doNavigate(use) {
-    var qqWeb = 'https://map.qq.com/?keyword=' + encodeURIComponent(ADDR);
-    var qqApp = 'https://apis.map.qq.com/uri/v1/search?keyword=' + encodeURIComponent(ADDR) + '&referer=invitation';
-    var gaodeApp = 'https://uri.amap.com/navigation?to=' + encodeURIComponent(ADDR) + '&callnative=1&mode=car';
-    var appleApp = 'http://maps.apple.com/?q=' + encodeURIComponent(ADDR);
-
     if (!isMobile()) {
-      // 桌面端：直接打开网页版地图
-      window.open(use === 'gaode' ? 'https://uri.amap.com/marker?position=' + encodeURIComponent(ADDR) : qqWeb, '_blank');
+      // 桌面：打开腾讯地图网页版，带精准标记
+      window.open('https://map.qq.com/?type=marker&isopeninfowin=1&markertype=1&pointx=' + LNG + '&pointy=' + LAT + '&name=' + encodeURIComponent(ADDR) + '&addr=' + encodeURIComponent(ADDR) + '&ref=invitation', '_blank');
       return;
     }
-    // 移动端：优先调起 App
     if (use === 'gaode') {
-      window.location.href = gaodeApp;
-    } else if (!isWechat() && /iPhone|iPad/i.test(navigator.userAgent)) {
-      window.location.href = appleApp;
-    } else {
-      window.location.href = qqApp;
+      window.location.href = 'https://uri.amap.com/navigation?to=' + LNG + ',' + LAT + ',大华启宸府&callnative=1&mode=car';
+      return;
     }
+    if (!isWechat() && /iPhone|iPad/i.test(navigator.userAgent)) {
+      window.location.href = 'http://maps.apple.com/?ll=' + LAT + ',' + LNG + '&q=' + encodeURIComponent(ADDR);
+      return;
+    }
+    // 微信 / Android：腾讯地图 App
+    window.location.href = 'https://apis.map.qq.com/uri/v1/marker?marker=coord:' + LAT + ',' + LNG + ';title:' + encodeURIComponent(ADDR) + ';addr:' + encodeURIComponent(ADDR) + '&referer=invitation';
   }
 
   // === 复制地址 ===
@@ -223,21 +189,15 @@
     copyText(ADDR, '✅ 地址已复制：' + ADDR);
   });
 
-  // === 微信联系 ===
+  // === 微信 ===
   document.getElementById('wechatBtn').addEventListener('click', function() {
     copyText(WECHAT_ID, '✅ 微信号「' + WECHAT_ID + '」已复制，打开微信添加我吧');
   });
 
   function copyText(text, okMsg) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(function() {
-        showHint(okMsg);
-      }).catch(function() {
-        fallbackCopy(text, okMsg);
-      });
-    } else {
-      fallbackCopy(text, okMsg);
-    }
+      navigator.clipboard.writeText(text).then(function() { showHint(okMsg); }).catch(function() { fallbackCopy(text, okMsg); });
+    } else { fallbackCopy(text, okMsg); }
   }
   function fallbackCopy(text, okMsg) {
     var ta = document.createElement('textarea');
@@ -245,12 +205,10 @@
     ta.style.cssText = 'position:fixed;left:-9999px;top:-9999px';
     document.body.appendChild(ta);
     ta.focus(); ta.select();
-    try { document.execCommand('copy'); showHint(okMsg); }
-    catch(e) { showHint('📋 请长按复制：' + text); }
+    try { document.execCommand('copy'); showHint(okMsg); } catch(e) { showHint('📋 请长按复制：' + text); }
     document.body.removeChild(ta);
   }
 
-  // === 提示 ===
   var hintTimer;
   function showHint(msg) {
     var el = document.getElementById('wechatHint');
