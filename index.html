@@ -139,6 +139,22 @@
     overflow: hidden;
     box-shadow: 0 2px 16px rgba(0,0,0,.05);
     background: #e8e4df;
+    cursor: pointer;
+  }
+  .map-wrap::after {
+    content: '👆 点我直接导航';
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,255,255,.92);
+    color: #4a3728;
+    font-size: 13px;
+    padding: 6px 16px;
+    border-radius: 20px;
+    z-index: 10;
+    pointer-events: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
   }
   .map-wrap iframe {
     width: 100%;
@@ -231,6 +247,13 @@
   }
   .contact-dot:active { background: #e8e0d6; }
   .contact-item span { font-size: 12px; color: #999; }
+  .wechat-hint {
+    margin-top: 12px;
+    font-size: 13px;
+    color: #e07b5a;
+    min-height: 20px;
+    transition: opacity .3s;
+  }
 
   /* ===== Footer ===== */
   .footer {
@@ -316,8 +339,11 @@
       </div>
     </div>
     <div class="nav-btn-group">
-      <a class="nav-btn" href="#" onclick="openMap();return false;">🚗 导航到这里</a>
-      <a class="nav-btn secondary" href="#" onclick="copyAddress();return false;">📋 复制地址</a>
+      <a class="nav-btn" id="navBtn" href="javascript:void(0)">🚗 一键导航到这里</a>
+    </div>
+    <div class="nav-btn-group" style="margin-top:8px;">
+      <a class="nav-btn secondary" id="copyBtn" href="javascript:void(0)">📋 复制地址</a>
+      <a class="nav-btn secondary" id="mapBtn0" href="javascript:void(0)">🗺 用高德打开</a>
     </div>
   </div>
 
@@ -325,15 +351,16 @@
   <div class="rsvp-section">
     <p>🎈 能否赏光？</p>
     <div class="contact-row">
-      <a class="contact-item" id="wechatBtn" href="#">
+      <div class="contact-item" id="wechatBtn">
         <div class="contact-dot">💬</div>
-        <span>私信我</span>
-      </a>
-      <a class="contact-item" id="phoneBtn" href="#">
+        <span>微信我</span>
+      </div>
+      <a class="contact-item" href="tel:17602068836">
         <div class="contact-dot">📞</div>
-        <span>打电话</span>
+        <span>17602068836</span>
       </a>
     </div>
+    <p class="wechat-hint" id="wechatHint"></p>
   </div>
 
   <div class="footer">期待你的到来 🥂</div>
@@ -342,113 +369,90 @@
 
 <script>
 var ADDR = '北京市昌平区大华启宸府';
+var WECHAT_ID = '疾风';  // ← 改成你的微信号
 
 // ——— 地图 iframe 加载失败时显示 fallback ———
-var iframe = document.getElementById('mapIframe');
-var fallback = document.getElementById('mapFallback');
-iframe.addEventListener('error', function() {
-  iframe.style.display = 'none';
-  fallback.style.display = 'flex';
+var _iframe = document.getElementById('mapIframe');
+var _fallback = document.getElementById('mapFallback');
+_iframe.addEventListener('error', function() {
+  _iframe.style.display = 'none';
+  _fallback.style.display = 'flex';
 });
-// 3 秒后仍未加载也算失败
-setTimeout(function() {
-  if (fallback.style.display !== 'flex') {
-    // iframe loaded OK, do nothing
-  }
-}, 4000);
 
-// ——— 智能导航：根据平台打开最佳地图 ———
+// ——— 点击地图区域也触发导航 ———
+document.querySelector('.map-wrap').addEventListener('click', function(e) {
+  if (e.target === this || e.target.closest('.map-fallback')) {
+    openMap();
+  }
+});
+
+// ——— 一键导航 ———
+document.getElementById('navBtn').addEventListener('click', openMap);
+
+// ——— 高德地图 ———
+document.getElementById('mapBtn0').addEventListener('click', function() {
+  window.location.href = 'https://uri.amap.com/navigation?to=' + encodeURIComponent(ADDR) + '&callnative=1&mode=car';
+});
+
 function openMap() {
   var ua = navigator.userAgent;
   var isWechat = /MicroMessenger/i.test(ua);
   var isIOS = /iPhone|iPad/i.test(ua);
-  // 腾讯地图（微信内置地图就是腾讯）
-  var qqMap = 'https://apis.map.qq.com/uri/v1/search?keyword=' + encodeURIComponent(ADDR) + '&referer=invitation';
-  // Apple Maps
-  var appleMap = 'http://maps.apple.com/?q=' + encodeURIComponent(ADDR);
-  // 高德地图
-  var gaodeMap = 'https://uri.amap.com/search?keyword=' + encodeURIComponent(ADDR) + '&callnative=1';
-
   if (isWechat || !isIOS) {
-    window.location.href = qqMap;
+    window.location.href = 'https://apis.map.qq.com/uri/v1/search?keyword=' + encodeURIComponent(ADDR) + '&referer=invitation';
   } else {
-    window.location.href = appleMap;
+    window.location.href = 'http://maps.apple.com/?q=' + encodeURIComponent(ADDR);
   }
 }
 
-// ——— 复制地址到剪贴板 ———
-function copyAddress() {
+// ——— 复制地址 ———
+document.getElementById('copyBtn').addEventListener('click', function() {
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(ADDR).then(function() {
-      alert('✅ 地址已复制：' + ADDR);
-    }).catch(function() {
-      fallbackCopy();
-    });
-  } else {
-    fallbackCopy();
-  }
-}
+      showHint('✅ 地址已复制：' + ADDR);
+    }).catch(fallbackCopy);
+  } else { fallbackCopy(); }
+});
 function fallbackCopy() {
   var ta = document.createElement('textarea');
   ta.value = ADDR;
-  ta.style.position = 'fixed'; ta.style.left = '-9999px';
+  ta.style.cssText = 'position:fixed;left:-9999px';
   document.body.appendChild(ta);
   ta.select();
-  try { document.execCommand('copy'); alert('✅ 地址已复制：' + ADDR); }
-  catch(e) { alert('手动复制地址：' + ADDR); }
+  try { document.execCommand('copy'); showHint('✅ 地址已复制'); }
+  catch(e) { showHint('📋 请手动复制：' + ADDR); }
   document.body.removeChild(ta);
 }
 
-// ——— 联系方式（改成你自己的） ———
-document.getElementById('wechatBtn').addEventListener('click', function(e) {
-  e.preventDefault();
-  alert('请微信搜索「疾风」给我发消息 😊\n（此处可改成你的微信号）');
+// ——— 微信联系：点击复制微信号 ———
+document.getElementById('wechatBtn').addEventListener('click', function() {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(WECHAT_ID).then(function() {
+      showHint('✅ 微信号「' + WECHAT_ID + '」已复制，打开微信添加我吧');
+    }).catch(function() {
+      showHint('📋 微信号：' + WECHAT_ID + '（长按复制）');
+    });
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = WECHAT_ID;
+    ta.style.cssText = 'position:fixed;left:-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); showHint('✅ 微信号已复制'); }
+    catch(e) { showHint('📋 微信号：' + WECHAT_ID); }
+    document.body.removeChild(ta);
+  }
 });
-document.getElementById('phoneBtn').addEventListener('click', function(e) {
-  e.preventDefault();
-  window.location.href = 'tel:17602068836';
-});
 
-// ========================================================
-//  微信 JS-SDK 分享增强（可选，需要服务端配合）
-//  替换掉默认的右上角分享，实现自定义标题/描述/图片
-//  前提：
-//   1. 已认证的微信公众号
-//   2. 域名添加到「JS接口安全域名」
-//   3. 后端提供签名接口（/api/wx-sign）
-// ========================================================
-/*
-(function() {
-  if (!/MicroMessenger/i.test(navigator.userAgent)) return;
-
-  var shareData = {
-    title: '诚邀莅临寒舍 | 乔迁之喜',
-    desc:  '6月13日周六17:30，昌平大华启宸府，新家暖房小聚 🏠',
-    link:  location.href,
-    imgUrl: 'https://你的域名.com/share-cover.jpg'  // ← 替换
-  };
-
-  // 1. 先从后端获取 wx.config 签名
-  fetch('/api/wx-sign?url=' + encodeURIComponent(location.href.split('#')[0]))
-    .then(function(r) { return r.json(); })
-    .then(function(cfg) {
-      wx.config({
-        debug: false,
-        appId: cfg.appId,
-        timestamp: cfg.timestamp,
-        nonceStr: cfg.nonceStr,
-        signature: cfg.signature,
-        jsApiList: ['updateAppMessageShareData', 'updateTimelineShareData']
-      });
-
-      wx.ready(function() {
-        wx.updateAppMessageShareData(shareData);   // 分享给朋友
-        wx.updateTimelineShareData(shareData);      // 分享到朋友圈
-      });
-    })
-    .catch(function() { /* 签名失败，使用默认分享行为 */ });
-})();
-*/
+// ——— 底部提示 ———
+var hintTimer;
+function showHint(msg) {
+  var el = document.getElementById('wechatHint');
+  el.textContent = msg;
+  el.style.opacity = '1';
+  clearTimeout(hintTimer);
+  hintTimer = setTimeout(function() { el.style.opacity = '0'; }, 3000);
+}
 </script>
 </body>
 </html>
